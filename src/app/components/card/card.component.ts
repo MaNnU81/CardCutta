@@ -3,14 +3,14 @@ import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe,  } from '@angular/common';
 import { CardService } from '../../services/card.service';
 
 
 @Component({
   standalone: true,
   selector: 'app-card',
-  imports: [MatCardModule, MatButtonModule, DatePipe, NgIf],
+  imports: [MatCardModule, MatButtonModule, DatePipe, ],
  
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
