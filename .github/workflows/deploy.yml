@@ -1,8 +1,7 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [ "main" ]
+  push: { branches: [ "main" ] }
   workflow_dispatch:
 
 permissions:
@@ -26,29 +25,47 @@ jobs:
           cache: 'npm'
 
       - name: Install deps
-        run: npm ci
+        run: npm ci || npm install
 
+      # 👉 niente --output-path fisso; lasciamo Angular scrivere dove preferisce
       - name: Build Angular (baseHref per GitHub Pages)
+        run: npm run build -- --base-href="/CardCutta/"
+
+      # 👉 trova la cartella che contiene index.html (di solito dist/*/browser)
+      - name: Locate build output
+        id: paths
+        shell: bash
         run: |
-          npm run build -- --base-href="/CardCutta/" --output-path=dist/site
-          cp dist/site/index.html dist/site/404.html
-          touch dist/site/.nojekyll
+          if [ -d dist/*/browser ]; then
+            echo "outdir=$(echo dist/*/browser)" >> $GITHUB_OUTPUT
+          elif [ -d dist/site/browser ]; then
+            echo "outdir=dist/site/browser" >> $GITHUB_OUTPUT
+          elif [ -f dist/site/index.html ]; then
+            echo "outdir=dist/site" >> $GITHUB_OUTPUT
+          else
+            echo "outdir=$(echo dist/*)" >> $GITHUB_OUTPUT
+          fi
+          echo "Using outdir: $(cat $GITHUB_OUTPUT | cut -d= -f2)"
+
+      # SPA fallback: copia index.html -> 404.html dentro la cartella scelta
+      - name: SPA fallback (404)
+        run: cp "${{ steps.paths.outputs.outdir }}/index.html" "${{ steps.paths.outputs.outdir }}/404.html"
+
+      # Evita Jekyll
+      - name: Disable Jekyll
+        run: touch "${{ steps.paths.outputs.outdir }}/.nojekyll"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/site
+          path: ${{ steps.paths.outputs.outdir }}
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deploy
         uses: actions/deploy-pages@v4
