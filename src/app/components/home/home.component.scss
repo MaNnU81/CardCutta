@@ -33,8 +33,8 @@ background:
       rgba(240,225,222,0.65) 40%
     ),
 image-set(
-      url('/hero_mirrored@1x.webp') 1x,
-      url('/hero_mirrored@2x.webp') 2x
+      url('hero_mirrored@1x.webp') 1x,
+      url('hero_mirrored@2x.webp') 2x
     ),
     var(--col-sand);
     background-repeat: no-repeat, no-repeat, no-repeat;
