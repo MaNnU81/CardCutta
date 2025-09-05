@@ -1,0 +1,50 @@
+deploy.ymlname: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]     # ogni push su main pubblica
+  workflow_dispatch:          # puoi lanciarlo a mano dal tab Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci || npm install
+
+      - name: Build Angular (baseHref per GitHub Pages)
+        run: |
+          npm run build -- --base-href="/CardCutta/" --output-path=dist/site
+          cp dist/site/index.html dist/site/404.html
+          touch dist/site/.nojekyll
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

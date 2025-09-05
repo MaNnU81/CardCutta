@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   standalone: true,
   selector: 'app-card',
-  imports: [MatCardModule, MatButtonModule, DatePipe, CommonModule ],
+  imports: [MatCardModule, MatButtonModule, DatePipe, ],
  
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
