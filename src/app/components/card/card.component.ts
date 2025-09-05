@@ -5,11 +5,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
 import { CardService } from '../../services/card.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-card',
-  imports: [MatCardModule, MatButtonModule, DatePipe],
+  imports: [MatCardModule, MatButtonModule, DatePipe, CommonModule ],
+ 
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
