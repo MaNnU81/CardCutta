@@ -1,10 +1,9 @@
 name: Deploy to GitHub Pages
 
-
 on:
   push:
-    branches: [ "main" ]     # ogni push su main pubblica
-  workflow_dispatch:          # puoi lanciarlo a mano dal tab Actions
+    branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
