@@ -1,0 +1,167 @@
+.wrap {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    gap: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+    border: 1px solid gray;
+}
+
+/* mat-card trasparente: lo sfondo sta dentro .card-capture */
+.bank-card.mat-mdc-card {
+    position: relative;
+    overflow: hidden;
+    background-color: transparent !important;
+    border-radius: 16px;
+    width: min(92vw, 420px);
+    aspect-ratio: 85.6 / 53.98;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, .10),
+        0 2px 6px rgba(0, 0, 0, .06);
+    padding: 0;
+    /* niente padding sul contenitore MDC */
+}
+
+/* griglia della card */
+.card-capture {
+    position: relative;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    overflow: hidden;
+    display: grid;
+    /* aree logiche */
+    grid-template-areas:
+        "brand  ....   img"
+        "....   ....    img"
+        "name  name     img"
+        "code  code  code"
+        "email  issued  issued";
+    grid-template-columns: 1fr 1.2fr 0.8fr;
+    grid-template-rows: 0.9fr auto 2.5fr auto auto;
+    gap: 8px 14px;
+    padding: 14px 16px;
+
+    /* sfondo con la tua palette */
+    background:
+        radial-gradient(260px 200px at 85% 10%, var(--col-aqua-700) 0%, transparent 60%),
+        radial-gradient(300px 220px at 15% 85%, var(--col-peach) 0%, transparent 60%),
+        var(--col-sand);
+}
+
+/* brand in alto (resta dove lo avevi) */
+.brand {
+    grid-area: brand;
+    justify-self: end;
+    align-self: start;
+    font-weight: 700;
+    letter-spacing: .06em;
+    font-size: clamp(18px, 2.6vw, 22px);
+}
+
+.badge-img{
+  grid-area: img;
+  position: relative;
+  align-self: start;
+  justify-self: end;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.badge-img-el{
+  position: absolute;
+  top: 0;
+  right: 24px;                 /* sposta a sinistra/a destra cambiando questo */
+  width: min(100%, 320px);
+  height: auto;
+//   border-radius: 50%;
+  opacity: .9;
+  object-fit: cover;
+  /* sfumatura “morbida” simile alla mask: */
+  clip-path: circle(62% at 80% 20%);
+  filter: saturate(1.04) contrast(1.02);
+}
+
+/* NOME COGNOME al centro */
+.fullname {
+grid-area: name;
+white-space: nowrap; 
+text-transform: capitalize;
+  align-self: center;
+  justify-self: center;
+  font-weight: 800;
+  letter-spacing: .01em;         
+  font-size: clamp(26px, 6.2vw, 34px); 
+  line-height: 1.05;             
+  text-align: center;
+  max-width: 92%;                 
+  z-index: 1;
+}
+
+/* Età (facoltativa) sotto il nome */
+.age {
+    grid-area: age;
+    justify-self: center;
+    font-size: clamp(11px, 2.6vw, 13px);
+    opacity: .75;
+}
+
+/* email a destra sopra la data */
+.email {
+    grid-area: email;
+    justify-self: center;
+    
+    max-width: 95%;
+    
+}
+
+/* codice in basso a sinistra */
+.code {
+    grid-area: code;
+}
+
+/* emessa in basso a destra */
+.issued {
+    grid-area: issued;
+    justify-self: center;
+    text-align: center;
+    max-width: 95%;
+}
+
+/* etichette e valori */
+.label {
+    font-size: 11px;
+    letter-spacing: .06em;
+    opacity: .7;
+}
+
+.value,
+.digits {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-weight: 600;
+    font-size: clamp(13px, 2.6vw, 15px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.code .digits {
+    font-size: clamp(15px, 3vw, 18px);
+    letter-spacing: .08em;
+}
+
+/* (se riattivi il chip in futuro)
+.chip{ ... }
+*/
+
+/* bottoni sotto */
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}

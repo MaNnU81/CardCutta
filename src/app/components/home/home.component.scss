@@ -1,0 +1,74 @@
+
+.page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+:root {
+  --col-aqua-100: #83bdc0; /* chiaro *//* base card */
+  --col-aqua-700: #549bad; /* scuro */
+  --col-peach:    #f7c9b6;
+  --col-sand:     #f0e1de; 
+}
+
+.container{
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+   min-height: 560px;  
+  border-radius: 20px;
+  padding: 24px 20px 28px;  
+ 
+  overflow: hidden; /* nasconde eventuali sbordi dei layer */
+--col-sand: #83bdc0;
+
+background:
+    linear-gradient(
+      to bottom,
+      rgba(240,225,222,0.30) 0%,
+      rgba(240,225,222,0.45) 60%,
+      rgba(240,225,222,0.65) 40%
+    ),
+image-set(
+      url('/hero_mirrored@1x.webp') 1x,
+      url('/hero_mirrored@2x.webp') 2x
+    ),
+    var(--col-sand);
+    background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center 0, center 0, center;
+
+  background-size: auto, 135% auto, auto;
+}
+
+
+
+section {
+  display: flex;
+
+  mat-form-field { display:block; margin-bottom: 12px; }
+.example-button-row .mat-mdc-button-base { margin: 8px 8px 0 0; }
+  align-items: center;
+}
+
+.example-label {
+  font-size: 14px;
+  margin: 0 16px 0 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

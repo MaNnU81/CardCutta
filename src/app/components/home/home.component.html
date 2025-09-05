@@ -1,0 +1,50 @@
+
+
+<div class="page">
+
+  <form [formGroup]="form" class="container" (ngSubmit)="onSubmit()">
+    <h1>Crea la tua CardCutta</h1>
+    <div>
+      <mat-form-field appearance="fill">
+
+        <input matInput placeholder="Nome" formControlName="nome">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>inserisci il tuo nome</mat-hint>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <input matInput placeholder="Cognome" formControlName="cognome">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>inserisci il tuo cognome</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Data di nascita</mat-label>
+        <input matInput type="date" formControlName="dataNascita" placeholder="GG/MM/AAAA" />
+        <mat-hint>inserisci la tua data di nascita</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill">
+
+        <input type="email" autocomplete="email" inputmode="email" spellcheck="false" autocapitalize="off" matInput
+          placeholder="Email" formControlName="email">
+        <mat-icon matSuffix>alternate_email</mat-icon>
+        <mat-hint>inserisci il tuo indirizzo mail</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="example-button-row">
+      <button mat-flat-button type="button" (click)="onReset()">Resetta i campi</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Crea la tua CardCutta</button>
+
+    </div>
+
+
+  </form>
+
+</div>

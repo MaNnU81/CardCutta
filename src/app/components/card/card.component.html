@@ -1,0 +1,50 @@
+<div class="wrap">
+  <mat-card class="bank-card">
+    <!-- area da catturare -->
+    <div class="card-capture" #cardRef>
+      <!-- immagine in alto a destra (layer decorativo) -->
+      <div class="badge-img" aria-hidden="true">
+  <img
+    class="badge-img-el"
+    src="/hero_mirrored@1x.webp"
+    srcset="/hero_mirrored@1x.webp 1x, /hero_mirrored@2x.webp 2x"
+    alt=""
+    loading="eager"
+    decoding="sync"
+  />
+</div>
+
+      <!-- brand: va bene dov’è -->
+      <div class="brand">CardCutta</div>
+
+      <!-- NOME COGNOME al centro -->
+      <div class="fullname">{{ fullName }}</div>
+      <!-- (opzionale) Età sotto il nome -->
+      <div class="age" *ngIf="age !== null">Età: {{ age }}</div>
+
+      <!-- email lato destro, sopra la data -->
+      <div class="email">
+        <div class="label">Email</div>
+        <div class="value">{{ card!.holder.email }}</div>
+      </div>
+
+      <!-- codice in basso a sinistra -->
+      <div class="code">
+        <div class="label">Codice</div>
+        <div class="digits">{{ card!.code }}</div>
+      </div>
+
+      <!-- emessa in basso a destra -->
+      <div class="issued">
+        <div class="label">Emessa</div>
+        <div class="value">{{ card!.issuedAt | date:'dd/MM/yyyy' }}</div>
+      </div>
+    </div>
+  </mat-card>
+
+  <div class="actions">
+    <button mat-flat-button (click)="onBackToEdit()">Modifica</button>
+    <button mat-flat-button (click)="onNew()">Nuova tessera</button>
+    <button mat-flat-button color="primary" (click)="onSaveImageJpg()">Salva immagine</button>
+  </div>
+</div>
