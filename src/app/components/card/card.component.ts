@@ -80,29 +80,30 @@ async onSaveImageJpg() {
 
   const hti = await import('html-to-image');
 
-  // 1) attende font E immagini dentro la card
+  // 1) aspetta font e immagini dentro la card
   await (document as any).fonts?.ready;
+  const imgs = Array.from(node.querySelectorAll('img'));
   await Promise.all(
-    Array.from(node.querySelectorAll('img'))
-      .filter(img => !img.complete)
-      .map(img => new Promise(res => { img.onload = img.onerror = () => res(null); }))
+    imgs.filter(img => !img.complete)
+        .map(img => new Promise(res => { img.onload = img.onerror = () => res(null); }))
   );
 
-  // 2) fissa le dimensioni per evitare reflow durante il render
+  // 2) fissa le dimensioni reali per evitare reflow nello snapshot
   const { width, height } = node.getBoundingClientRect();
 
+  // 3) genera JPG nitido, evitando i webfont cross-origin
   const dataUrl = await hti.toJpeg(node, {
     pixelRatio: 2,
     quality: 0.92,
     backgroundColor: '#ffffff',
     cacheBust: true,
-    skipFonts: true,                 // evita i CSS cross-origin
-    style: { width: `${width}px`, height: `${height}px` }, // blocca layout
+    skipFonts: true,
+    style: { width: `${width}px`, height: `${height}px` },
   });
 
   const filename = `CardCutta_${this.card!.holder.cognome}_${this.card!.code}.jpg`;
 
-  // Web Share su mobile (se disponibile)
+  // Condivisione nativa se disponibile (mobile)
   try {
     const res = await fetch(dataUrl);
     const blob = await res.blob();
@@ -114,7 +115,7 @@ async onSaveImageJpg() {
     }
   } catch {}
 
-  // Fallback download
+  // Fallback: download
   const a = document.createElement('a');
   a.href = dataUrl;
   a.download = filename;
