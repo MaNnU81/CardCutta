@@ -26,7 +26,7 @@ jobs:
           cache: 'npm'
 
       - name: Install deps
-        run: npm ci || npm install
+        run: npm ci
 
       - name: Build Angular (baseHref per GitHub Pages)
         run: |
@@ -42,9 +42,13 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deploy
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
